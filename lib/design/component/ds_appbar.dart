@@ -19,11 +19,25 @@ AppBar closeAppBar(BuildContext context, String title, {VoidCallback? onPressed}
     ]);
 
 AppBar normalAppBar(String title) => AppBar(
-      backgroundColor: bgColor,
-      scrolledUnderElevation: 0,
-      surfaceTintColor: Colors.transparent,
-      title: Text(title, style: appBarStyle),
-    );
+  backgroundColor: bgColor,
+  scrolledUnderElevation: 0,
+  surfaceTintColor: Colors.transparent,
+  title: Text(title, style: appBarStyle),
+);
+
+
+AppBar refreshAppBar(String title, {VoidCallback? onPressed}) => AppBar(
+    backgroundColor: bgColor,
+    scrolledUnderElevation: 0,
+    surfaceTintColor: Colors.transparent,
+    title: Text(title, style: appBarStyle),
+    actions: [
+      IconButton(
+        icon: const Icon(Icons.refresh),
+        onPressed: onPressed,
+      ),
+    ]
+);
 
 SystemUiOverlayStyle systemStyle = const SystemUiOverlayStyle(
   statusBarColor: bgColor,

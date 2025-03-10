@@ -56,4 +56,9 @@ class Api {
     final dio = await getDio();
     return dio.get('/greeting');
   }
+
+  static Future<Response> getQuizRanking() async {
+    final dio = await getDio();
+    return dio.get('/quiz/ranking');
+  }
 }

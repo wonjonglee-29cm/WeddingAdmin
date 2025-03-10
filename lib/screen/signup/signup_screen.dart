@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wedding/design/anim/ds_slide_route.dart';
 import 'package:wedding/design/component/ds_appbar.dart';
 import 'package:wedding/design/component/ds_bottom_button.dart';
 import 'package:wedding/design/component/ds_selection_button.dart';
@@ -54,16 +53,6 @@ class SignUpScreen extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    child: bottomButtonWidget(onPressed: () => {
-                      //Navigator.of(context).push(SlideUpRoute(page: const MembersScreen()))
-                      // api 개발 후 이동
-                    }, text: '전체 하객 정보 보기', isEnabled: true, padding: const EdgeInsets.symmetric(horizontal: 0)),
-                  ),
-
-                  itemsGap,
-                  itemsGap,
-
                   TextFieldWidget(
                     controller: nameController,
                     decoration: defaultDecor(hint: '하객 이름을 입력해주세요', labelText: '초대할 하객의 이름을 입력해주세요.'),

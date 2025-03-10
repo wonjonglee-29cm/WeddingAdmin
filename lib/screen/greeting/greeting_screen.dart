@@ -15,7 +15,9 @@ class GreetingScreen extends HookConsumerWidget {
     final expandedStates = useState<Set<int>>({}); // Track expanded state for each item
 
     return Scaffold(
-      appBar: normalAppBar('방명록 모아보기'),
+      appBar: refreshAppBar('방명록 모아보기', onPressed: () => {
+        ref.read(greetingViewModelProvider.notifier).fetchGreetings()
+      }),
       body: greetingState.isLoading && greetingState.greetings.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : greetingState.errorMessage != null

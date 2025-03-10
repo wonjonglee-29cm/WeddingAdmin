@@ -6,7 +6,7 @@ import 'package:wedding/screen/di_viewmodel.dart';
 
 import '../attendees/attendees_screen.dart';
 import '../greeting/greeting_screen.dart';
-import '../quiz/quiz_screen.dart';
+import '../quiz/quiz_ranking_screen.dart';
 import '../signup/signup_screen.dart';
 
 class MainScreen extends HookConsumerWidget {
@@ -18,7 +18,7 @@ class MainScreen extends HookConsumerWidget {
   static final List<Widget> _screens = [
     const SignUpScreen(),
     const GreetingScreen(),
-    const QuizScreen(),
+    const QuizRankingScreen(),
     const AttendeesScreen(),
   ];
   static const List<BottomNavigationBarItem> _navigationItems = [
