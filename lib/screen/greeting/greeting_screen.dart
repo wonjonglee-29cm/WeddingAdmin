@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:wedding/design/component/ds_appbar.dart';
 import 'package:wedding/design/ds_foundation.dart';
 import 'package:wedding/screen/di_viewmodel.dart';
 
 // Greeting 화면
 class GreetingScreen extends HookConsumerWidget {
-  const GreetingScreen({Key? key}) : super(key: key);
+  const GreetingScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final greetingState = ref.watch(greetingViewModelProvider);
-    final expandedStates = useState<Set<int>>({}); // Track expanded state for each item
 
     return Scaffold(
-      appBar: refreshAppBar('방명록 모아보기', onPressed: () => {
-        ref.read(greetingViewModelProvider.notifier).fetchGreetings()
-      }),
+      appBar: refreshAppBar('방명록 모아보기', onPressed: () => {ref.read(greetingViewModelProvider.notifier).fetchGreetings()}),
       body: greetingState.isLoading && greetingState.greetings.isEmpty
           ? const Center(child: CircularProgressIndicator())
           : greetingState.errorMessage != null
@@ -58,21 +54,15 @@ class GreetingScreen extends HookConsumerWidget {
                           itemCount: greetingState.greetings.length,
                           itemBuilder: (context, index) {
                             final greeting = greetingState.greetings[index];
-                            final isExpanded = expandedStates.value.contains(index);
+                            final isExpanded = greetingState.expandedItems.contains(index);
 
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
                                 GestureDetector(
                                   onTap: () {
-                                    // Toggle expansion for this specific item
-                                    final currentExpandedStates = Set<int>.from(expandedStates.value);
-                                    if (currentExpandedStates.contains(index)) {
-                                      currentExpandedStates.remove(index);
-                                    } else {
-                                      currentExpandedStates.add(index);
-                                    }
-                                    expandedStates.value = currentExpandedStates;
+                                    // ViewModel에 토글 요청 전달
+                                    ref.read(greetingViewModelProvider.notifier).toggleExpanded(index);
                                   },
                                   child: Container(
                                     margin: const EdgeInsets.only(bottom: 8.0),
