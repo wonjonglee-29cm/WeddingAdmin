@@ -1,159 +1,118 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-
-// SignUp 상태 클래스
-class SignUpState {
-  final bool isLoading;
-  final String? errorMessage;
-
-  SignUpState({
-    this.isLoading = false,
-    this.errorMessage,
-  });
-
-  SignUpState copyWith({
-    bool? isLoading,
-    String? errorMessage,
-  }) {
-    return SignUpState(
-      isLoading: isLoading ?? this.isLoading,
-      errorMessage: errorMessage,
-    );
-  }
-}
-
-// SignUp ViewModel
-class SignUpViewModel extends StateNotifier<SignUpState> {
-  SignUpViewModel() : super(SignUpState());
-
-  void startLoading() {
-    state = state.copyWith(isLoading: true, errorMessage: null);
-  }
-
-  void stopLoading() {
-    state = state.copyWith(isLoading: false);
-  }
-
-  void setError(String message) {
-    state = state.copyWith(errorMessage: message, isLoading: false);
-  }
-
-  Future<void> signUp({
-    required String name,
-    required String email,
-    required String password,
-  }) async {
-    try {
-      startLoading();
-      // 실제 회원가입 로직 구현
-      await Future.delayed(const Duration(seconds: 2)); // 회원가입 API 호출 시뮬레이션
-      stopLoading();
-    } catch (e) {
-      setError(e.toString());
-    }
-  }
-}
-
-// SignUp Provider
-final signUpProvider = StateNotifierProvider<SignUpViewModel, SignUpState>((ref) {
-  return SignUpViewModel();
-});
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wedding/design/anim/ds_slide_route.dart';
+import 'package:wedding/design/component/ds_appbar.dart';
+import 'package:wedding/design/component/ds_bottom_button.dart';
+import 'package:wedding/design/component/ds_selection_button.dart';
+import 'package:wedding/design/component/ds_textfield.dart';
+import 'package:wedding/design/ds_foundation.dart';
+import 'package:wedding/screen/di_viewmodel.dart';
 
 // SignUp 화면
 class SignUpScreen extends HookConsumerWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
+  const SignUpScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final signUpState = ref.watch(signUpProvider);
-    final viewModel = ref.read(signUpProvider.notifier);
+    final signUpState = ref.watch(signUpViewModelProvider);
+    final viewModel = ref.read(signUpViewModelProvider.notifier);
 
     // 텍스트 컨트롤러 생성
     final nameController = useTextEditingController();
-    final emailController = useTextEditingController();
-    final passwordController = useTextEditingController();
+
+    // 회원가입 함수
+    Future<void> handleSignUp() async {
+      if (nameController.text.isEmpty) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('이름을 입력해주세요.')),
+        );
+        return;
+      }
+
+      final result = await viewModel.signUp(name: nameController.text);
+
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(result ? '회원가입이 완료되었습니다.' : '회원가입이 실패하였습니다.'),
+          ),
+        );
+      }
+    }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('회원가입'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Text(
-              '회원가입 화면',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            const SizedBox(height: 32),
+      appBar: normalAppBar('회원가입'),
+      body: Expanded(
+          child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    child: bottomButtonWidget(onPressed: () => {
+                      //Navigator.of(context).push(SlideUpRoute(page: const MembersScreen()))
+                      // api 개발 후 이동
+                    }, text: '전체 하객 정보 보기', isEnabled: true, padding: const EdgeInsets.symmetric(horizontal: 0)),
+                  ),
 
-            // 에러 메시지가 있으면 표시
-            if (signUpState.errorMessage != null)
-              Container(
-                padding: const EdgeInsets.all(8),
-                color: Colors.red[100],
-                child: Text(
-                  signUpState.errorMessage!,
-                  style: const TextStyle(color: Colors.red),
-                ),
-              ),
+                  itemsGap,
+                  itemsGap,
 
-            const SizedBox(height: 16),
+                  TextFieldWidget(
+                    controller: nameController,
+                    decoration: defaultDecor(hint: '하객 이름을 입력해주세요', labelText: '초대할 하객의 이름을 입력해주세요.'),
+                    maxLength: 6,
+                    validator: (value) {
+                      if (value?.isEmpty ?? true) return '하객 이름이 없습니다.';
+                      return null;
+                    },
+                  ).animate().fadeIn().slideY(begin: 1, end: 0),
 
-            // 폼 필드들
-            TextFormField(
-              controller: nameController,
-              decoration: const InputDecoration(
-                labelText: '이름',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: emailController,
-              decoration: const InputDecoration(
-                labelText: '이메일',
-                border: OutlineInputBorder(),
-              ),
-              keyboardType: TextInputType.emailAddress,
-            ),
-            const SizedBox(height: 16),
-            TextFormField(
-              controller: passwordController,
-              decoration: const InputDecoration(
-                labelText: '비밀번호',
-                border: OutlineInputBorder(),
-              ),
-              obscureText: true,
-            ),
-            const SizedBox(height: 32),
+                  itemsGap,
 
-            // 회원가입 버튼
-            ElevatedButton(
-              onPressed: signUpState.isLoading
-                  ? null
-                  : () {
-                viewModel.signUp(
-                  name: nameController.text,
-                  email: emailController.text,
-                  password: passwordController.text,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size.fromHeight(50),
+                  buildSelectionButtons(
+                    '신랑측/신부측 선택',
+                    {true: '신랑', false: '신부'},
+                    signUpState.isGroom,
+                    (value) => viewModel.setIsGroom(value == true),
+                  ),
+                  itemsGap,
+
+                  // 에러 메시지가 있으면 표시
+                  if (signUpState.errorMessage != null)
+                    Padding(
+                      padding: const EdgeInsets.only(top: 16),
+                      child: Container(
+                        padding: const EdgeInsets.all(8),
+                        color: Colors.red[100],
+                        child: Text(
+                          signUpState.errorMessage!,
+                          style: const TextStyle(color: Colors.red),
+                        ),
+                      ),
+                    )
+                ],
               ),
-              child: signUpState.isLoading
-                  ? const CircularProgressIndicator()
-                  : const Text('회원가입'),
             ),
-          ],
-        ),
-      ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            child: bottomButtonWidget(
+              onPressed: signUpState.isLoading ? null : handleSignUp,
+              text: '확인',
+              isEnabled: !signUpState.isLoading,
+            ),
+          ),
+          itemsGap,
+          itemsGap,
+        ],
+      )),
     );
   }
 }

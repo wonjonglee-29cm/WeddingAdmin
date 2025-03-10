@@ -1,18 +1,18 @@
 class GreetingRaw {
-  final int id;
+  final String userName;
   final String message;
 
-  GreetingRaw({required this.id, required this.message});
+  GreetingRaw({required this.userName, required this.message});
 
   Map<String, dynamic> toJson() => {
-        'id': id,
+        'userName': userName,
         'message': message,
       };
 
   // 단일 객체 파싱을 위한 팩토리 메서드
   factory GreetingRaw.fromJson(Map<String, dynamic> json) {
     return GreetingRaw(
-      id: json['id'],
+      userName: json['userName'],
       message: json['message'],
     );
   }

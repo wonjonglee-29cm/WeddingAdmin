@@ -21,7 +21,7 @@ class MemberRepository {
 
   Future<bool> signUp(SignInRaw request) async {
     final response = await Api.signUp(request);
-    return response.statusCode! > 300;
+    return response.statusCode! <= 300;
   }
 
   Future<MemberAllRaw> getAll() async {
