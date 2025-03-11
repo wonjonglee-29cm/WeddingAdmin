@@ -43,8 +43,7 @@ class SignUpScreen extends HookConsumerWidget {
 
     return Scaffold(
       appBar: normalAppBar('회원가입'),
-      body: Expanded(
-          child: Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
@@ -69,7 +68,7 @@ class SignUpScreen extends HookConsumerWidget {
                     '신랑측/신부측 선택',
                     {true: '신랑', false: '신부'},
                     signUpState.isGroom,
-                    (value) => viewModel.setIsGroom(value == true),
+                        (value) => viewModel.setIsGroom(value == true),
                   ),
                   itemsGap,
 
@@ -101,7 +100,7 @@ class SignUpScreen extends HookConsumerWidget {
           itemsGap,
           itemsGap,
         ],
-      )),
+      ),
     );
   }
 }
