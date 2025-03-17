@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:wedding/data/raw/user_info_raw.dart';
+
 class MemberAllRaw {
   final int count;
   final int attendanceCount;
@@ -16,12 +18,12 @@ class MemberAllRaw {
   });
 
   Map<String, dynamic> toJson() => {
-    'count': count,
-    'attendanceCount': attendanceCount,
-    'companionCount': companionCount,
-    'mealCount': mealCount,
-    'members': members.map((member) => member.toJson()).toList(),
-  };
+        'count': count,
+        'attendanceCount': attendanceCount,
+        'companionCount': companionCount,
+        'mealCount': mealCount,
+        'members': members.map((member) => member.toJson()).toList(),
+      };
 
   factory MemberAllRaw.fromJson(Map<String, dynamic> json) {
     return MemberAllRaw(
@@ -29,9 +31,7 @@ class MemberAllRaw {
       attendanceCount: json['attendanceCount'] ?? 0,
       companionCount: json['companionCount'] ?? 0,
       mealCount: json['mealCount'] ?? 0,
-      members: (json['members'] as List<dynamic>?)
-          ?.map((memberJson) => UserInfoRaw.fromJson(memberJson))
-          .toList() ?? [],
+      members: (json['members'] as List<dynamic>?)?.map((memberJson) => UserInfoRaw.fromJson(memberJson)).toList() ?? [],
     );
   }
 
@@ -63,55 +63,5 @@ class MemberAllRaw {
   // 업데이트 완료된 멤버만 필터링
   List<UserInfoRaw> getUpdatedMembers() {
     return members.where((member) => member.isUpdatedInfo()).toList();
-  }
-}
-
-class UserInfoRaw {
-  final int id;
-  final String? name;
-  final String? guestType;
-  final bool? isAttendance;
-  final bool? isCompanion;
-  final int? companionCount;
-  final bool? isMeal;
-
-  UserInfoRaw({
-    required this.id,
-    required this.name,
-    this.guestType,
-    this.isAttendance,
-    this.isCompanion,
-    this.companionCount,
-    this.isMeal,
-  });
-
-  bool isUpdatedInfo() {
-    return guestType != null &&
-        isAttendance != null &&
-        isCompanion != null &&
-        companionCount != null &&
-        isMeal != null;
-  }
-
-  Map<String, dynamic> toJson() => {
-    'id': id,
-    'name': name,
-    'guestType': guestType?.toUpperCase(),
-    'isAttendance': isAttendance,
-    'isCompanion': isCompanion,
-    'companionCount': companionCount,
-    'isMeal': isMeal,
-  };
-
-  factory UserInfoRaw.fromJson(Map<String, dynamic> json) {
-    return UserInfoRaw(
-      id: json['id'],
-      name: json['name'],
-      guestType: json['guestType'],
-      isAttendance: json['attendance'],
-      isCompanion: json['companion'],
-      companionCount: json['companionCount'],
-      isMeal: json['meal'],
-    );
   }
 }

@@ -1,4 +1,4 @@
-import 'package:wedding/data/raw/member_all_raw.dart';
+import 'package:wedding/data/raw/user_info_raw.dart';
 
 class QuizRankingRaw {
   final UserInfoRaw user;

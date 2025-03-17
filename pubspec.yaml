@@ -118,7 +118,7 @@ flutter_launcher_icons:
   ios: true  # ios에서는 기본 이름 사용
   image_path: "assets/icon/icon.png"  # 사용할 아이콘 이미지 경로
   min_sdk_android: 21  # 안드로이드 최소 SDK 버전
-  name: "쫑밍 청첩장"
+  name: "쫑밍 청첩장 어드민"
   web:
     generate: true
     image_path: "assets/icon/icon.png"

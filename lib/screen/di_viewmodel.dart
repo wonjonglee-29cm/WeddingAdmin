@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:wedding/data/di_repository.dart';
+import 'package:wedding/screen/attendees/attendees_viewmodel.dart';
 import 'package:wedding/screen/greeting/greeting_viewmodel.dart';
 import 'package:wedding/screen/main/main_viewmodel.dart';
 import 'package:wedding/screen/quiz/quiz_ranking_viewmodel.dart';
@@ -27,4 +28,9 @@ final greetingViewModelProvider = StateNotifierProvider.autoDispose<GreetingView
 final quizRankingViewModelProvider = StateNotifierProvider.autoDispose<QuizRankingViewModel, QuizRankingState>((ref) {
   final repository = ref.watch(quizRepositoryProvider);
   return QuizRankingViewModel(repository);
+});
+
+final attendeesViewModelProvider = StateNotifierProvider.autoDispose<AttendeesViewModel, AttendeesState>((ref) {
+  final memberRepository = ref.watch(memberRepositoryProvider);
+  return AttendeesViewModel(memberRepository);
 });

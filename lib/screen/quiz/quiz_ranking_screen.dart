@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wedding/data/raw/quiz_ranking_raw.dart';
 import 'package:wedding/design/component/ds_appbar.dart';
+import 'package:wedding/design/ds_foundation.dart';
 import 'package:wedding/screen/di_viewmodel.dart';
 import 'package:wedding/screen/quiz/quiz_ranking_viewmodel.dart';
 
@@ -20,20 +21,6 @@ class _UserDetailsDialog extends HookWidget {
     // 애니메이션 효과
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 300),
-    );
-
-    final scaleAnimation = useAnimation(
-      Tween<double>(begin: 0.8, end: 1.0).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeOutQuart,
-      )),
-    );
-
-    final opacityAnimation = useAnimation(
-      Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-        parent: animationController,
-        curve: Curves.easeOutQuart,
-      )),
     );
 
     useEffect(() {
@@ -284,7 +271,7 @@ class _RankingItem extends HookWidget {
                             Container(
                               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                               decoration: BoxDecoration(
-                                color: Colors.blue.shade100,
+                                color: secondaryColor,
                                 borderRadius: BorderRadius.circular(16),
                               ),
                               child: Text(

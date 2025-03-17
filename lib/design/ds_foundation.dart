@@ -8,8 +8,12 @@ const TextStyle appBarStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.bol
 
 const TextStyle titleStyle1 = TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.black);
 const TextStyle titleStyle2 = TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black);
+const TextStyle titleStyle3 = TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.black);
 const TextStyle bodyStyle1 = TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Colors.black);
 const TextStyle bodyStyle2 = TextStyle(fontSize: 14, fontWeight: FontWeight.normal, color: Colors.black);
+const TextStyle bodyStyle3 = TextStyle(fontSize: 12, fontWeight: FontWeight.normal, color: Colors.black);
+const TextStyle bodyStyle4 = TextStyle(fontSize: 10, fontWeight: FontWeight.normal, color: Colors.black);
+const TextStyle bodyStyle5 = TextStyle(fontSize: 8, fontWeight: FontWeight.normal, color: Colors.black);
 
 const TextStyle whiteTitleStyle1 = TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white);
 const TextStyle whiteTitleStyle2 = TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white);
