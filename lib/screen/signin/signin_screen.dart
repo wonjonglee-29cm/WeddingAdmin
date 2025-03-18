@@ -67,7 +67,6 @@ class _SignScreenState extends ConsumerState<SignInScreen> {
                     TextFieldWidget(
                       controller: _passwordController,
                       decoration: defaultDecor(hint: 'hello world!', labelText: 'password'),
-                      keyboardType: TextInputType.number,
                       maxLength: 30,
                       obscureText: true,
                     ).animate().fadeIn().slideY(begin: 1, end: 0, delay: const Duration(milliseconds: 200)),
