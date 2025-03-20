@@ -25,7 +25,7 @@ class _UserDetailsDialog extends HookWidget {
 
     useEffect(() {
       animationController.forward();
-      return animationController.dispose;
+      return null; // dispose 함수를 반환하지 않도록 수정
     }, []);
 
     return ScaleTransition(
@@ -175,10 +175,10 @@ class _RankingItem extends HookWidget {
   final int position;
 
   const _RankingItem({
-    Key? key,
+    super.key,
     required this.ranking,
     required this.position,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -205,7 +205,7 @@ class _RankingItem extends HookWidget {
 
     useEffect(() {
       animationController.forward();
-      return animationController.dispose;
+      return null; // dispose 함수를 반환하지 않도록 수정
     }, []);
 
     return Opacity(

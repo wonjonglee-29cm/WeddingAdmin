@@ -142,6 +142,10 @@ class AttendeesViewModel extends StateNotifier<AttendeesState> {
     }
   }
 
+  void setInitialState() {
+    state = AttendeesState.initial();
+  }
+
   void setSearchQuery(String query) {
     state = state.copyWith(searchQuery: query);
     _applyFilters();

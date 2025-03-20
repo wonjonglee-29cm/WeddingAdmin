@@ -19,7 +19,11 @@ class AttendeesScreen extends HookConsumerWidget {
     final attendeesViewModel = ref.read(attendeesViewModelProvider.notifier);
 
     return Scaffold(
-      appBar: normalAppBar('참석자 정보 확인'),
+      appBar: refreshAppBar('참석자 정보 확인', onPressed: () => {
+        searchController.text = '',
+        attendeesViewModel.setInitialState(),
+        attendeesViewModel.loadAttendees()
+      }),
       body: switch (attendeesState.uiState) {
         Loading() => const Center(child: CircularProgressIndicator()),
         Error(message: final message) => Center(child: Text('에러가 발생했습니다: $message')),
