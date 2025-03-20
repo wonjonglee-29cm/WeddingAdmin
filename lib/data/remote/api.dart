@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding/data/raw/signin_raw.dart';
+import 'package:wedding/data/raw/user_info_raw.dart';
 
 import 'auth_interceptor.dart';
 
@@ -60,5 +61,15 @@ class Api {
   static Future<Response> getQuizRanking() async {
     final dio = await getDio();
     return dio.get('/quiz/ranking');
+  }
+
+  static Future<Response> findMember(int id) async {
+    final dio = await getDio();
+    return dio.get('/member/find', queryParameters: {'id': id});
+  }
+
+  static Future<Response> updateMember(UserInfoRaw request) async {
+    final dio = await getDio();
+    return dio.patch('/member/update', data: request.toJson());
   }
 }

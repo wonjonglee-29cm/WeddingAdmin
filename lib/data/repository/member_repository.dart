@@ -2,6 +2,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wedding/data/raw/member_all_raw.dart';
 import 'package:wedding/data/raw/signin_raw.dart';
 import 'package:wedding/data/raw/token_raw.dart';
+import 'package:wedding/data/raw/user_info_raw.dart';
 import 'package:wedding/data/remote/api.dart';
 
 class MemberRepository {
@@ -28,5 +29,35 @@ class MemberRepository {
     final response = await Api.getAllMembers();
     final data = MemberAllRaw.fromJson(response.data);
     return data;
+  }
+
+  Future<UserInfoRaw> findMember(int id) async {
+    final response = await Api.findMember(id);
+    return UserInfoRaw.fromJson(response.data);
+  }
+
+  Future<UserInfoRaw> updateMember({
+    required int id,
+    required String name,
+    required String guestType,
+    required bool isAttendance,
+    required bool isCompanion,
+    required int? companionCount,
+    required bool isMeal,
+  }) async {
+    final request = UserInfoRaw(
+      id: id,
+      name: name,
+      guestType: guestType,
+      isAttendance: isAttendance,
+      isCompanion: isCompanion,
+      companionCount: companionCount,
+      isMeal: isMeal,
+    );
+
+    final response = await Api.updateMember(request);
+    final info = UserInfoRaw.fromJson(response.data);
+
+    return info;
   }
 }

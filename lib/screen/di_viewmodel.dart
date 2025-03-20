@@ -7,6 +7,8 @@ import 'package:wedding/screen/quiz/quiz_ranking_viewmodel.dart';
 import 'package:wedding/screen/signin/signin_viewmodel.dart';
 import 'package:wedding/screen/signup/signup_viewmodel.dart';
 
+import 'userinfo/user_info_viewmodel.dart';
+
 final signInViewModelProvider = StateNotifierProvider<SignInViewModel, SignInState>((ref) {
   return SignInViewModel(ref.watch(memberRepositoryProvider));
 });
@@ -33,4 +35,9 @@ final quizRankingViewModelProvider = StateNotifierProvider.autoDispose<QuizRanki
 final attendeesViewModelProvider = StateNotifierProvider.autoDispose<AttendeesViewModel, AttendeesState>((ref) {
   final memberRepository = ref.watch(memberRepositoryProvider);
   return AttendeesViewModel(memberRepository);
+});
+
+final userInfoViewModelProvider = StateNotifierProvider.family.autoDispose<UserInfoViewModel, UserInfoState, int>((ref, id) {
+  final memberRepository = ref.read(memberRepositoryProvider);
+  return UserInfoViewModel(memberRepository, id);
 });

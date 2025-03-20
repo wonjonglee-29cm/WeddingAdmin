@@ -7,6 +7,7 @@ import 'package:wedding/design/component/ds_textfield.dart';
 import 'package:wedding/design/ds_foundation.dart';
 import 'package:wedding/screen/attendees/attendees_viewmodel.dart';
 import 'package:wedding/screen/di_viewmodel.dart';
+import 'package:wedding/screen/userinfo/user_info_screen.dart';
 
 class AttendeesScreen extends HookConsumerWidget {
   const AttendeesScreen({super.key});
@@ -89,7 +90,12 @@ class AttendeesScreen extends HookConsumerWidget {
               return AttendeeListItem(
                 member: member,
                 onEdit: () {
-
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserInfoScreen(id: member.id),
+                    ),
+                  );
                 },
                 onDelete: () {
                   _showDeleteConfirmDialog(
